@@ -43,7 +43,7 @@ namespace subota1.Controllers
             klub.KlubName = klubs.Last().KlubName;
             klub.KlubCityName = klubs.Last().KlubCityName;
             klub.KlubCountryName = klubs.Last().KlubCountryName;
-            klub.Id =klubs.Last().Id;
+           /klub.KlubId =klubs.Last().KlubId;
                 return $"A new klub {newKlub.KlubId} {klub.KlubName} {klub.KlubCityName}  {klub.KlubCountryName}";
         }
                
