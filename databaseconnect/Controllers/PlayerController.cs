@@ -14,15 +14,13 @@ namespace databaseconnect.Controllers
     public class PlayerController : ApiController
     {
 
-        public static string con = @"server = DESKTOP-K7K3O10\SQLEXPRESS; database=football;integrated security=true";
-        //SqlDataAdapter data = new SqlDataAdapter("SELECT * FROM Klub", con);
-        //SqlDataReader reader = command.ExecuteReader();
-        //SqlConnection= new SqlConnection;
+       // public static string con = @"server = DESKTOP-K7K3O10\SQLEXPRESS; database=football;integrated security=true";
+        static string connectionString = @"server = DESKTOP-K7K3O10\SQLEXPRESS; database=football;integrated security=true";
+        SqlConnection con = new SqlConnection(connectionString);
         // GET: api/Player
 
         [HttpGet]
         [Route("api/player")]
-
 
         // GET: api/Player
         public string Get()
@@ -57,29 +55,40 @@ namespace databaseconnect.Controllers
       
         [HttpPost]
         [Route("webapi/inserplayer")]
-        //public void Post([FromBody] string value)
-        //{
-        public HttpResponseMessage InserNewPlayerWithAdapter(Player player)
+        List<Player> InsertPlayer(Player player)
         {
-            SqlDataAdapter data = new SqlDataAdapter("SELECT * FROM Player", con);
-            //SqlDataAdapter data = new SqlDataAdapter();
-            SqlConnection connection = new SqlConnection(con);
-            using (connection)
+
+            SqlCommand command = new SqlCommand
+                ($"INSERT INTO Player (PlayerID, PlayerName, PlayerLastName, KLubName, PlayerPosition) VALUES ('{player.PlayerId}', '{player.PlayerName}'," +
+                $" '{player.PlayerLastName}', '{player.KlubName}', '{player.PlayerPosition}');", con);
+
+            con.Open();
+
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.InsertCommand = command;
+            adapter.InsertCommand.ExecuteNonQuery();
+
+
+            SqlDataReader reader = command.ExecuteReader();
+            Player plays= new Player();
+
+            while ( reader.Read())
             {
-                connection.Open();
-                string newKlubCommand = $"INSERT INTO Klub ( Player Name, PlayerLastName, KlubName, PlayerPosition) VALUES ({player.PlayerName},{player.PlayerLastName}, {player.KlubName}, {player.PlayerPosition});";
-                data.InsertCommand = new SqlCommand(newKlubCommand, connection);
-
-                data.InsertCommand.ExecuteNonQuery();
-                connection.Close();
-
+                plays.PlayerId = reader.GetInt32(0);
+                plays.PlayerName = reader.GetString(1);
+                plays.PlayerLastName = reader.GetString(2);
+                plays.KlubName = reader.GetString(3);
+                plays.PlayerPosition = reader.GetString(4);
             }
-            return Request.CreateResponse(HttpStatusCode.OK, "You have inserted a new klub!");
+            con.Close();
+            return plays;
+
+            
         }
-        //players.Add(newPLayer);
-        // SqlDataAdapter data = new SqlDataAdapter("Inser * Into Player", con);
-        // DataTable datatable = new DataTable();
-        // data.Fill(datatable);
+            
+        //public void Post([FromBody] string value)
+
+      
 
 
     }
