@@ -36,14 +36,14 @@ namespace subota1.Controllers
         [Route("webApi/Klub")]
 
         // POST: api/Default    
-        public string InsertNewPlayer(Klub newKlub)
+        public string InsertNewKlub(Klub newKlub)
         {
             klubs.Add(newKlub);
             Klub klub = new Klub();
             klub.KlubName = klubs.Last().KlubName;
             klub.KlubCityName = klubs.Last().KlubCityName;
             klub.KlubCountryName = klubs.Last().KlubCountryName;
-           /klub.KlubId =klubs.Last().KlubId;
+            klub.KlubId =klubs.Last().KlubId;
                 return $"A new klub {newKlub.KlubId} {klub.KlubName} {klub.KlubCityName}  {klub.KlubCountryName}";
         }
                

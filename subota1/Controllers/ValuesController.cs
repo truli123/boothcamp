@@ -14,22 +14,22 @@ namespace subota1.Controllers
         static List<Player> players = new List<Player>();
         public PlayerController()
         {
-            players.Add(new Player { PlayerName = " Pero", PlayerLastName = "peric", KlubName = "psv1", PlayerPosition = "Golakeeper", Id = 1 });
-            players.Add(new Player { PlayerName = " Pera", PlayerLastName = "perica", KlubName = "psv2", PlayerPosition = "Golakeeper", Id = 2});
-            players.Add(new Player { PlayerName = " Peru", PlayerLastName = "pericaa", KlubName = "psv3", PlayerPosition = "Golakeeper", Id = 3 });
+            players.Add(new Player { PlayerName = " Pero", PlayerLastName = "peric", KlubName = "psv1", PlayerPosition = "Golakeeper", });
+            players.Add(new Player { PlayerName = " Pera", PlayerLastName = "perica", KlubName = "psv2", PlayerPosition = "Golakeeper", });
+            players.Add(new Player { PlayerName = " Peru", PlayerLastName = "pericaa", KlubName = "psv3", PlayerPosition = "Golakeeper", });
             //"New York","London","Mumbai","Chicago"};
 
             // GET api/values
 
         }
         [HttpGet]
-        [Route("api/values/KlubName")]
-        public List <string> GetKlubNames()
+        [Route("api/values/PlayerName")]
+        public List <string> GetPlayerNames()
         {
             List<string> names = new List<string>();
-           foreach (var player in players)
+           foreach (var Player in players)
             {
-                names.Add(player.KlubName);
+                names.Add(Player.PlayerName);
             }
             return names;// return cities;
         }
