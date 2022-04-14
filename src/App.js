@@ -1,11 +1,26 @@
+import { useState } from "react";
 import React from 'react' // treba ako se zove klasa
 import Header from './components/Header'
-
+import Klick from './components/tick'
+import UserForm from "./components/ContactForm.jsx";
+import ContactForm from "./components/ContactForm.jsx";
+import ContactList from "./components/ContactList.jsx";
+import "./App.css";
 
 function App() {
+  const [contacts, updateContacts] = useState([]);
+    const addContact = (contact) => {
+    updateContacts([...contacts, contact]);
+  };
   return (
     <div className="App">
-     < Header/>
+    < Header/>
+    <br></br>
+    < Klick/>
+    
+        <ContactForm addContact={addContact} />
+      <ContactList contacts={contacts} />
+  
    </div>
   );
 }
